@@ -1,0 +1,7 @@
+server:
+  port: 8090
+test:
+  csv:  /csv/defaultQuestionPack.csv
+  countQuestions: 5
+  local: ru
+
