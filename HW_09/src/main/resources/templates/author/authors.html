@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+<div role="main" class="container">
+    <H2 th:text="#{form.author.listlabel}">Список авторов</H2>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="author : ${authors}">
+            <td th:text="${author.getId()}">ID</td>
+            <td><a th:href="@{'/author/'+${author.getId()}}" th:text="${author.getName()}">Name</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-secondary" th:href="@{'/author/edit/0'}">Add</a>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>

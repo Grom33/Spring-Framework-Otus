@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+
+<div role="main" class="container">
+    <H2 th:text="#{books.header}">Список книг</H2>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col" th:text="#{label.name}">Name</th>
+            <th scope="col" th:text="#{book.table.genre}">Genre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.getId()}">ID</td>
+            <td><a th:href="@{'/book/'+${book.getId()}}" th:text="${book.getName()}">Name</a></td>
+            <td th:text="${book.getGenres()}">Genres</td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-secondary" th:href="@{'/book/edit/0'}" th:text="#{button.save}">add</a>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>
+
