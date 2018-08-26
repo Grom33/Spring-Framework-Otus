@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+
+<div role="main" class="container">
+    <H2 th:text="#{form.book.edit.header}">Edit book infomation</H2>
+</div>
+<div class="container">
+    <H4 th:text="${book.getName()}">NAME</H4>
+    <form id="detailsForm" th:action="@{'/book/edit/'+${book.getId()}}" th:method="post" action="edit.html">
+        <div class="form-group">
+            <label for="name" th:text="#{form.book.edit.name}">Name</label>
+            <input type="text" class="form-control" id="name" name="name" aria-describedby="text"
+                   placeholder="Book name" th:value="${book.getName()}">
+            <small id="namehelp" class="form-text text-muted">edit name of the book</small>
+        </div>
+        <div class="form-group">
+            <label for="description" th:text="#{form.book.edit.descriprtion}">Example textarea</label>
+            <textarea class="form-control" id="description" name="description" rows="3"
+                      th:text="${book.getDescription()}"></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="genre" th:text="#{form.book.edit.genreLabel}">Example multiple select</label>
+                <select multiple class="form-control" id="genre" name="genres" th:if="${book.getGenres()!=null}">
+                    <option th:each="genre : ${genres}" th:value="${genre.getId()}" th:text="${genre.getName()}"
+                            th:selected="${book.getGenres().contains(genre)}">1
+                    </option>
+                </select>
+                <select multiple class="form-control" id="genre" name="genres" th:unless="${book.getGenres()!=null}">
+                    <option th:each="genre : ${genres}" th:value="${genre.getId()}" th:text="${genre.getName()}">1
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="author" th:text="#{form.book.edit.authorLabel}">Example multiple select</label>
+                <select multiple class="form-control" id="author" name="authors" th:if="${book.getAuthors()!=null}">
+                    <option th:each="author : ${authors}" th:value="${author.getId()}" th:text="${author.getName() }"
+                            th:selected="${book.getAuthors().contains(author)}">1
+                    </option>
+                </select>
+                <select multiple class="form-control" id="author" name="authors" th:unless="${book.getAuthors()!=null}">
+                    <option th:each="author : ${authors}" th:value="${author.getId()}" th:text="${author.getName() }">1
+                    </option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
+    </form>
+</div>
+
+
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>

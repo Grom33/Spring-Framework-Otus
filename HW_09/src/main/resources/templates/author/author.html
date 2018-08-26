@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header" th:text="#{form.author.view.header}">
+            Информация об авторе
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">name</dt>
+                <dd class="col-sm-9" th:text="${author.getName()}">name</dd>
+            </dl>
+            <a class="btn btn-primary" th:href="@{'/author/edit/'+${author.getId()}}">Edit</a>
+        </div>
+    </div>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>
