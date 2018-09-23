@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+
+<div role="main" class="container">
+    <H2 th:text="#{form.genre.edit.header}">Редактирование информация о книге</H2>
+</div>
+<div class="container">
+    <H4 th:text="${genre.getName()}">NAME</H4>
+    <form id="detailsForm" th:action="@{'/genre/edit/'+${genre.getId()}}" th:method="post" action="edit.html">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" aria-describedby="text"
+                   th:placeholder="#{form.genre.edit.name}" th:value="${genre.getName()}">
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
+    </form>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>

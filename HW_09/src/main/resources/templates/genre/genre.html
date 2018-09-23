@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <p th:text="#{forn.genre.header}"> Информация о жанре< /p>
+
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3" th:text="#{label.name}">name</dt>
+                <dd class="col-sm-9" th:text="${genre.getName()}">name</dd>
+            </dl>
+            <a class="btn btn-primary" th:href="@{'/genre/edit/'+${genre.getId()}}" th:text="#{button.edit}">Edit</a>
+        </div>
+    </div>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>

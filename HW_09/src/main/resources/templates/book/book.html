@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+
+
+<div class="container">
+    <div class="card border-primary">
+        <div class="card-header" th:text="#{form.book.about}">
+            Информация о книге
+        </div>
+        <div class="card-body">
+
+            <h5 class="card-title" th:text="${book.getName()}">Special title treatment</h5>
+            <p class="card-text" th:text="${book.getDescription()}"> description</p>
+            <dl class="row">
+
+                <dt class="col-sm-3" th:text="#{form.book.edit.genreLabel}">genres</dt>
+                <dd class="col-sm-9">
+                    <ul>
+                        <li th:each="genre: ${book.getGenres()}" th:text="${genre.getName()}">java</li>
+                    </ul>
+
+                </dd>
+                <dt class="col-sm-3" th:text="#{form.book.edit.authorLabel}">authors</dt>
+                <dd class="col-sm-9">
+                    <ul>
+                        <li th:each="author: ${book.getAuthors()}" th:text="${author.getName()}">Bloch</li>
+                    </ul>
+                </dd>
+            </dl>
+            <a class="btn btn-primary float-right" th:href="@{'/book/edit/'+${book.getId()}}">Edit</a>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header" th:text="#{form.book.comment}">Комментарии</div>
+
+        <div class="card" th:each="comment:${Comments}">
+            <div class="card-body">
+                <p class="card-text" th:text="${comment.getReview()}">With supporting text below as a natural lead-in to
+                    additional content.</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <form class="form-inline" th:action="@{'/comment/add/'+${book.getId()}}" th:method="post">
+        <input type="text" class="form-control" id="commentEdit" name="review" th:placeholder="#{label.comment}">
+        <button type="submit" class="btn btn-primary float-right" th:text="#{button.save}">Submit</button>
+    </form>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>
