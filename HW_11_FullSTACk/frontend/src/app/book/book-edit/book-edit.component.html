@@ -1,0 +1,38 @@
+<h3>Редактирование информация о книге</h3>
+
+<form [formGroup]="bookForm">
+  <div class="card-body">
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-control" type="text" formControlName="nameControl">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-control" id="descriptionBox" rows="3" formControlName="descriptionControl"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Genres</label>
+      <select multiple class="form-control" formControlName="genreControl">
+        <option *ngFor="let genreI of genreItems" value={{genreI.genre.id}} selected={{genreI.selected}}>{{genreI.genre.name}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Authors</label>
+      <select multiple class="form-control" formControlName="authorControl">
+          <option *ngFor="let authorI of authorItems" value={{authorI.author.id}} selected={{authorI.selected}}>{{authorI.author.name}}
+            </option>
+      </select>
+    </div>
+    <hr>
+    <div class="row">
+      <div>
+        <a class="btn btn-success" (click)="save()" role="button">Save</a>
+      </div>
+      <div> .</div>
+      <div>
+        <a class="btn btn-primary" (click)="backClicked()" role="button">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>

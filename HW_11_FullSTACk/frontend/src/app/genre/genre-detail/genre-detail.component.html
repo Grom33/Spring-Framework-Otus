@@ -1,0 +1,6 @@
+<h3>Информация о жанре</h3>
+
+<div class="card-body">
+    <h5 class="card-title">{{ genre.name }}</h5>
+    <a [routerLink]="['/genres/'+genre.id+'/edit']" class="btn btn-primary">Edit</a>
+</div>

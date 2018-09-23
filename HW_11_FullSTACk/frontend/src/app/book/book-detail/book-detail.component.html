@@ -1,0 +1,22 @@
+<figure class="figure">
+  <img src="http://placehold.it/820x320" class="figure-img img-fluid rounded">
+  <figcaption class="figure-caption">
+    <h4>Title: {{book.name}}</h4>
+    <h5> Description: {{book.description}}</h5>
+    <h5>Authors:
+      <ul>
+        <li *ngFor="let auth of book.authors">
+          {{auth.name}}
+        </li>
+      </ul></h5>
+    <h5>Genres:
+      <ul>
+        <li *ngFor="let gen of book.genres">
+          {{gen.name}}
+        </li>
+      </ul></h5>
+  </figcaption>
+  <a [routerLink]="['/books/'+book.id+'/edit']" class="btn btn-primary">Edit</a>
+  <a  class="btn btn-primary" (click)='remove()'>delete</a>
+  <a  class="btn btn-primary" (click)='backClicked()'>Back</a>
+</figure>
