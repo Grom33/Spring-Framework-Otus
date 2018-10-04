@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<script src="https://my.com/1.js"
+        th:src="@{/js/authors.js}" defer></script>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+<div role="main" class="container">
+    <H2 th:text="#{form.author.listlabel}">Список авторов</H2>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col" th:text="#{label.name}">Name</th>
+            <th scope="col">X</th>
+        </tr>
+        </thead>
+        <tbody id="table">
+        </tbody>
+    </table>
+    <a class="btn btn-secondary" onclick="showAddDialog()" th:text="#{button.add}">Add</a>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+<div class="modal fade" tabindex="-1" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle" th:text="#{dialog.authors.new.title}">modalTitle</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="detailsForm">
+                    <input type="hidden" id="id" name="id">
+                    <div class="form-group">
+                        <label for="editName" class="col-form-label" th:text="#{label.name}">Name</label>
+                        <input type="text" class="form-control" id="editName" name="name">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.cancel}">
+                    <span class="fa fa-close"></span>
+                    cancel
+                </button>
+                <button type="button" class="btn btn-primary" onclick="addAuthor()" th:text="#{button.add}">
+                    <span class="fa fa-check"></span>
+                    save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
