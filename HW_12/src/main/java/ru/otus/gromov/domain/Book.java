@@ -59,47 +59,6 @@ public class Book {
         this.authors = authors;
     }
 
-    /*public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Set<Genre> getGenres() {
-        return this.genres;
-    }
-
-    public Set<Author> getAuthors() {
-        return this.authors;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }*/
-
     public void addAuthor(Author author) {
         this.authors.add(author);
     }
@@ -127,15 +86,4 @@ public class Book {
     public int hashCode() {
         return Objects.hash(id, name, genres, authors);
     }
-
-    /*@Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", genres=" + genres +
-                ", authors=" + authors +
-                '}';
-    }*/
 }

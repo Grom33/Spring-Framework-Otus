@@ -8,10 +8,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.otus.gromov.service.UserService;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+    @Autowired
+    private UserService userService;
 
 
     @Override
@@ -49,9 +51,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("password").roles("ADMIN");
+    public void configure(AuthenticationManagerBuilder auth) {
+        userService.getAll().forEach((user -> {
+            try {
+                auth.inMemoryAuthentication()
+                        .withUser(user.getUserName()).password(user.getPassword()).roles("ADMIN");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
     @Bean

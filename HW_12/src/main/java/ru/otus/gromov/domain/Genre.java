@@ -43,29 +43,8 @@ public class Genre {
         this.name = name;
     }
 
-    /*public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }*/
-
     public boolean isNew() {
         return this.id < 1;
-    }
-
-   /* public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     @Override
@@ -80,5 +59,5 @@ public class Genre {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
-    }*/
+    }
 }

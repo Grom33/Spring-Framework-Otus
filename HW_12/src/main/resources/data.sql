@@ -36,4 +36,5 @@ insert into BOOK_AUTHOR (`BOOK_ID`, `AUTHOR_ID`) values (2, 2);
 insert into BOOK_AUTHOR (`BOOK_ID`, `AUTHOR_ID`) values (2, 3);
 insert into BOOK_AUTHOR (`BOOK_ID`, `AUTHOR_ID`) values (3, 3);
 
-
+insert into lib_User (`id`, `userName`, `password`) values (1, 'Admin', 'password');
+insert into lib_User (`id`, `userName`, `password`) values (2, 'user', 'qwerty');
