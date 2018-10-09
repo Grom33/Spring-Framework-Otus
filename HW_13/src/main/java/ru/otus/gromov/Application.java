@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @EnableSwagger2
 public class Application {
     public static void main(String[] args) throws SQLException {
-        Console.main(args);
+       // Console.main(args);
         SpringApplication.run(Application.class);
     }
 

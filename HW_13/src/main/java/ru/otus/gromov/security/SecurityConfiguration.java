@@ -32,38 +32,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/security_check", "/*.svg", "/webjars*/**", "/h2-console*/**", "/login")
                 .permitAll()
-                .anyRequest()
-                .authenticated()
+
+                .and()
+                .authorizeRequests().antMatchers("/books/**", "/genres/**", "/authors/**").authenticated()
 
                 .and()
                 .authorizeRequests().antMatchers("/swagger-ui*/**").hasRole("ADMIN")
 
                 .and()
-                .authorizeRequests().antMatchers("/books/**", "/genres/**", "/authors/**")
-                .permitAll().anyRequest().authenticated()
-
-
-                .and()
-                .formLogin()
-                .loginPage("/login")
+                .formLogin().loginPage("/login")
                 .loginProcessingUrl("/security_check")
                 .usernameParameter("x_username")
                 .passwordParameter("x_password")
-                //.permitAll()
+
 
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/")
-               // .permitAll()
 
                 .and()
-                .rememberMe().key("someSecret");
+                .rememberMe().key("someSecret")
+                .and().exceptionHandling().accessDeniedPage("/login");
     }
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) {
-       userService.getAll().forEach((user -> {
+        userService.getAll().forEach((user -> {
             try {
                 auth.inMemoryAuthentication()
                         .withUser(user.getUserName()).password(user.getPassword()).roles(user.getRole());
