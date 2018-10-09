@@ -31,7 +31,7 @@ public class BookServiceImpl implements BookService {
         return repository.count();
     }
 
-    @Secured({"ADMIN", "USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @Override
     @Transactional
     public Book save(Book book) {
@@ -59,14 +59,14 @@ public class BookServiceImpl implements BookService {
         return repository.findAll();
     }
 
-    @Secured({"ADMIN"})
+    @Secured({"ROLE_ADMIN"})
     @Override
     @Transactional
     public void delete(Long id) {
         repository.delete(repository.findById(id).orElseThrow(() -> new NotFoundException("Book with id = " + id + " not found!")));
     }
 
-    @Secured({"ADMIN", "USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @Override
     public void addComment(String text, Long bookId) {
         Comment comment = new Comment(text,
@@ -76,7 +76,7 @@ public class BookServiceImpl implements BookService {
         commentRepository.save(comment);
     }
 
-    @Secured({"ADMIN", "USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @Override
     public void deleteComment(Long commentId) {
         commentRepository.delete(commentRepository.findById(commentId)
