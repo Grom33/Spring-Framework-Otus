@@ -1,5 +1,8 @@
 
 spring:
+  batch:
+      job:
+        enabled: false
   shell:
     interactive:
       enabled: false
@@ -16,7 +19,7 @@ spring:
       mongodb:
         authentication-database: 'admin'
         database: 'test'
-        port: 27017
+        port: 27018
         host: 'localhost'
 
 

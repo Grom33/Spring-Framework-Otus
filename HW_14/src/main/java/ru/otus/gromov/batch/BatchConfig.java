@@ -26,9 +26,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import ru.otus.gromov.domain.Book;
 import ru.otus.gromov.repository.BookRepository;
 
@@ -50,13 +48,13 @@ public class BatchConfig {
     @Autowired
     private BookRepository bookRepository;
 
-
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Bean
-    public MongoItemWriter<Book> writer() throws Exception {
+    public  MongoItemWriter<Book> writer() throws Exception {
         return new MongoItemWriterBuilder<Book>()
-                .template(mongoTemplate())
-                .collection(Book.class.getSimpleName())
+                .template(mongoTemplate)
                 .build();
     }
 
@@ -72,30 +70,10 @@ public class BatchConfig {
         return reader;
     }
 
-    @Bean
-    public MongoDbFactory mongoDbFactory() throws Exception {
-        return new SimpleMongoDbFactory(new MongoClient(), "db-name");
-    }
-
-    @Bean
-    public MongoTemplate mongoTemplate() throws Exception {
-        MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-        return mongoTemplate;
-    }
-
-    @Bean
+     @Bean
     public ItemProcessor processor() {
         return (ItemProcessor<Book, Book>) book -> book;
     }
-
-    /*@Bean
-    public FlatFileItemWriter writer() {
-        return new FlatFileItemWriterBuilder<>()
-                .name("personItemWriter")
-                .resource(new FileSystemResource("output.csv"))
-                .lineAggregator(new DelimitedLineAggregator<>())
-                .build();
-    }*/
 
     @Bean
     public Job importBookJob(Step step1) {
@@ -146,13 +124,4 @@ public class BatchConfig {
                 })
                 .build();
     }
-
-    /*@Bean
-    public JobLauncher jobLauncher(JobRepository repository){
-        JobLauncher launcher = new SimpleJobLauncher();
-        ((SimpleJobLauncher) launcher).setJobRepository(repository);
-        ((SimpleJobLauncher) launcher).setTaskExecutor(Runnable::run);
-    return launcher;
-    }*/
-
 }
