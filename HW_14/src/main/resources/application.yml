@@ -1,5 +1,8 @@
 
 spring:
+  shell:
+    interactive:
+      enabled: false
   jpa:
     hibernate:
       ddl-auto: update
@@ -8,8 +11,13 @@ spring:
     username: 'sa'
     password: ''
     driver-class-name: org.h2.Driver
-    schema: 'classpath:acl-schema.sql'
     data: 'classpath:acl-data.sql'
+  data:
+      mongodb:
+        authentication-database: 'admin'
+        database: 'test'
+        port: 27017
+        host: 'localhost'
 
 
 

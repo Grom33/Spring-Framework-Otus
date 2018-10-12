@@ -3,6 +3,7 @@ package ru.otus.gromov.domain;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +30,7 @@ public class Genre {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "genres")
-    private Set<Book> books;
+    transient private Set<Book> books;
 
     public Genre() {
     }

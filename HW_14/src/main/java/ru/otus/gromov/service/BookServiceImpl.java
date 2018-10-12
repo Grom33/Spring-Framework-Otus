@@ -1,9 +1,6 @@
 package ru.otus.gromov.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.gromov.domain.Book;
@@ -31,42 +28,40 @@ public class BookServiceImpl implements BookService {
         return repository.count();
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @Override
     @Transactional
     public Book save(Book book) {
         return repository.save(book);
     }
 
-    @PostAuthorize("hasPermission(returnObject, 'READ')")
     @Override
     @Transactional(readOnly = true)
     public Book getById(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Book with id =" + id + " not found!"));
     }
 
-    @PostAuthorize("hasPermission(returnObject, 'READ')")
+
     @Override
     @Transactional(readOnly = true)
     public Book getByName(String name) {
         return repository.findByName(name).orElseThrow(() -> new NotFoundException("Book with name: " + name + " not found!"));
     }
 
-    @PostFilter("hasPermission(filterObject, 'READ')")
+
     @Override
     @Transactional(readOnly = true)
     public List<Book> getAll() {
         return repository.findAll();
     }
 
-    @Secured({"ROLE_ADMIN"})
+
     @Override
     @Transactional
     public void delete(Long id) {
         repository.delete(repository.findById(id).orElseThrow(() -> new NotFoundException("Book with id = " + id + " not found!")));
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+
     @Override
     public void addComment(String text, Long bookId) {
         Comment comment = new Comment(text,
@@ -76,7 +71,7 @@ public class BookServiceImpl implements BookService {
         commentRepository.save(comment);
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+
     @Override
     public void deleteComment(Long commentId) {
         commentRepository.delete(commentRepository.findById(commentId)
