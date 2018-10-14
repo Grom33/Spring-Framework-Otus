@@ -1,0 +1,21 @@
+spring:
+  profiles: development
+  data:
+    mongodb:
+      authentication-database: 'admin'
+      database: 'library'
+      port: 27017
+      host: 'localhost'
+---
+spring:
+  profiles: test
+  data:
+    mongodb:
+      authentication-database: 'admin'
+      database: 'library'
+      port: 27018
+      host: 'localhost'
+---
+spring:
+  profiles:
+    active: 'test'

@@ -1,0 +1,8 @@
+<h3>Информация об авторе</h3>
+
+<div class="card-body">
+    <h5 class="card-title">{{ author.name }}</h5>
+    <a [routerLink]="['/authors/'+author.id+'/edit']" class="btn btn-primary">Edit</a>
+    <a (click)="remove()" class="btn btn-primary">Remove</a>
+    <a (click)="backClicked()" class="btn btn-primary">Cancel</a>
+</div>
