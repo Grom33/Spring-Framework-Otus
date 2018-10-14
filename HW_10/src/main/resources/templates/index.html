@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="~{fragments/head :: head}">...</div>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+
+<main role="main" class="container">
+    <div class="jumbotron">
+        <h1>Hello, user !</h1>
+        <p class="lead">This is library</p>
+        <blockquote class="blockquote">
+            <p class="mb-0">Кто владеет информацией – тот владеет миром.</p>
+            <footer class="blockquote-footer">У. Черчилль</footer>
+        </blockquote>
+    </div>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>
