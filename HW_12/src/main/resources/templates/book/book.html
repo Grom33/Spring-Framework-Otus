@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<script src="https://my.com/1.js"
+        th:src="@{/js/bookView.js}" defer></script>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+
+<div class="container">
+    <div class="card border-primary">
+        <div class="card-header" th:text="#{form.book.about}">
+            Информация о книге
+        </div>
+        <div class="card-body">
+
+            <h5 class="card-title" id="bookTitle" >Special title treatment</h5>
+            <p class="card-text" id="bookDescription"> description</p>
+            <dl class="row">
+
+                <dt class="col-sm-3" th:text="#{form.book.edit.genreLabel}">genres</dt>
+                <dd class="col-sm-9">
+                    <ul id="genresList">
+                    </ul>
+
+                </dd>
+                <dt class="col-sm-3" th:text="#{form.book.edit.authorLabel}">authors</dt>
+                <dd class="col-sm-9">
+                    <ul id="authorsList">
+                    </ul>
+                </dd>
+            </dl>
+            <a class="btn btn-primary float-right" onclick="showEditDialog()" th:text="#{button.edit}">Edit</a>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header" th:text="#{form.book.comment}">Комментарии</div>
+
+        <div class="card" id="commentsCard">
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="row">
+            <div class="col col-md-10">
+                <input type="text" class="form-control" id="commentEdit" name="review"
+                       th:placeholder="#{label.comment}">
+            </div>
+            <div class="col col-md-2">
+                <button type="submit" class="btn btn-primary float-right" th:text="#{button.save}"
+                        onclick="addComment()">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle" th:text="#{dialog.book.edit.title}">modalTitle</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="detailsForm">
+                    <input type="hidden" id="id" name="id" th:value="${id}">
+                    <div class="form-group">
+                        <label for="editName" class="col-form-label" th:text="#{label.name}">Name</label>
+                        <input type="text" class="form-control" id="editName" name="name"
+                               placeholder="type name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription" class="col-form-label" th:text="#{form.book.edit.descriprtion}">Description</label>
+                        <input type="text" class="form-control" id="editDescription" name="description"
+                               placeholder="type description">
+                    </div>
+                    <div class="form-group">
+                        <label for="authors" th:text="#{form.book.edit.authorLabel}">Example multiple select</label>
+                        <select multiple class="form-control" id="authors" name="authors">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="genres" th:text="#{form.book.edit.genreLabel}">Example multiple select</label>
+                        <select multiple class="form-control" id="genres" name="genres">
+
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.cancel}">
+                    <span class="fa fa-close"></span>
+                    cancel
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveBook()" th:text="#{button.save}">
+                    <span class="fa fa-check"></span>
+                    save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>
