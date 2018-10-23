@@ -16,8 +16,6 @@ public class Soul {
 
 	int sins;
 
-	String karma;
-
 	public Soul(String name, int sins) {
 		this.name = name;
 		this.sins = sins;

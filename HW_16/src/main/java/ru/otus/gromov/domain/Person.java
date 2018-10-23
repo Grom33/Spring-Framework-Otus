@@ -9,15 +9,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Person")
 public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	long id;
 
-    transient Soul soul;
+	transient Soul soul;
 
-    public Person(Soul soul) {
-        this.soul = soul;
-    }
-
-
+	public Person(Soul soul) {
+		this.soul = soul;
+	}
 }

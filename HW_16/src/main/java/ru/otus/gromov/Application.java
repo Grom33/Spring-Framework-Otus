@@ -25,8 +25,8 @@ public class Application {
         Random random = new Random();
 
         while (POPULATION_OF_EARTH > 0){
-            morgueService.welcome(new Person(new Soul(df.getName(),random.nextInt(3))));
-            Thread.sleep(1000);
+            morgueService.restInPeace(new Person(new Soul(df.getName(),random.nextInt(3))));
+            Thread.sleep((long) (Math.random()*1000));
             POPULATION_OF_EARTH--;
         }
     }

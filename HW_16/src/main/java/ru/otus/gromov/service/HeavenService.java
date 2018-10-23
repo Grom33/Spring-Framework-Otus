@@ -1,5 +1,6 @@
 package ru.otus.gromov.service;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.integration.channel.PublishSubscribeChannel;
@@ -11,38 +12,61 @@ import org.springframework.stereotype.Service;
 import ru.otus.gromov.domain.Soul;
 import ru.otus.gromov.repository.HeavenRepository;
 
-import java.util.ArrayList;
-
 @Service
-public class HeavenService implements MessageHandler {
+public class HeavenService implements MessageHandler, World {
+	private String slogan;
+	private String chief;
+	private final HeavenRepository reposetory;
+	private final MeterRegistry mr;
 
-    HeavenRepository reposetory;
+	private final PublishSubscribeChannel gossip;
 
-    private final PublishSubscribeChannel gossip;
+	@Autowired
+	public HeavenService(@Qualifier("BeyondRumors") PublishSubscribeChannel gossip, HeavenRepository reposetory, MeterRegistry mr) {
+		this.gossip = gossip;
+		this.reposetory = reposetory;
+		this.mr = mr;
+		this.slogan = "Welcome to home";
+		this.chief = "God";
+		gossip.subscribe(this);
+	}
 
-    @Autowired
-    public HeavenService(@Qualifier("BeyondRumors") PublishSubscribeChannel gossip, HeavenRepository reposetory) {
-        this.gossip = gossip;
-        this.reposetory = reposetory;
-        gossip.subscribe(this);
-    }
+	public void ascendToHeaven(Message message) {
+		Soul saint = (Soul) message.getPayload();
+		mr.counter("Heaven-income").increment();
+		reposetory.save(saint);
+		gossip.send(MessageBuilder
+				.withPayload(String.format("Saint %s come to paradise!", saint.getName()))
+				.setHeader("Smell", "Good")
+				.build());
+	}
 
-    public void ascendToHeaven(Message message) {
-        Soul saint = (Soul) message.getPayload();
+	@Override
+	public void handleMessage(Message<?> message) throws MessagingException {
+		if ("Good".equals(message.getHeaders().get("Smell")))
+			System.out.println("Paradise gossip: " + message.getPayload());
+	}
 
-        reposetory.save(saint);
-        gossip.send(MessageBuilder
-                .withPayload(String.format("Saint %s come to paradise!", saint.getName()))
-                .setHeader("Smell", "Good")
-                .build());
-    }
+	public long getParadisePopulation() {
+		return reposetory.count();
+	}
 
-    @Override
-    public void handleMessage(Message<?> message) throws MessagingException {
-        if ("Good".equals(message.getHeaders().get("Smell"))) System.out.println("Paradise gossip: "+message.getPayload());
-    }
+	@Override
+	public String getChiefName() {
+		return chief;
+	}
 
-    public long getParadisePopulation(){
-        return reposetory.count();
-    }
+	@Override
+	public String getSlogan() {
+		return slogan;
+	}
+
+	@Override
+	public void setSlogan(String slogan) {
+		this.slogan = slogan;
+	}
+
+	public long getPrayDuration() {
+		return (long) (Math.random() * 100000);
+	}
 }

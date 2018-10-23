@@ -1,5 +1,6 @@
 package ru.otus.gromov.service;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.integration.channel.PublishSubscribeChannel;
@@ -13,18 +14,25 @@ import ru.otus.gromov.repository.HellRepository;
 
 
 @Service
-public class HellService implements MessageHandler {
+public class HellService implements MessageHandler, World {
+	private String slogan;
+	private String chief;
 	private HellRepository boiler;
 	private final PublishSubscribeChannel gossip;
+	private final MeterRegistry mr;
 
 	@Autowired
-	public HellService(@Qualifier("BeyondRumors") PublishSubscribeChannel gossip, HellRepository repository) {
+	public HellService(@Qualifier("BeyondRumors") PublishSubscribeChannel gossip, HellRepository repository, MeterRegistry mr) {
 		this.boiler = repository;
 		this.gossip = gossip;
+		this.mr = mr;
+		this.slogan = "Lasciate ogni speranza, voi ch'entrate";
+		this.chief = "Devil";
 		gossip.subscribe(this);
 	}
 
 	public void burnInHell(Message message) {
+		mr.counter("Hell-income").increment();
 		Soul sinner = (Soul) message.getPayload();
 		boiler.save(sinner);
 		gossip.send(MessageBuilder
@@ -43,4 +51,18 @@ public class HellService implements MessageHandler {
 
 	}
 
+	@Override
+	public String getChiefName() {
+		return chief;
+	}
+
+	@Override
+	public String getSlogan() {
+		return slogan;
+	}
+
+	@Override
+	public void setSlogan(String slogan) {
+		this.slogan = slogan;
+	}
 }
