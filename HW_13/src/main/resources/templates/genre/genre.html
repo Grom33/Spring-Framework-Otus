@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/head :: head}">...</div>
+<script src="https://my.com/1.js"
+        th:src="@{/js/genreView.js}" defer></script>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}">...</div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <p th:text="#{forn.genre.header}"> Информация о жанре< /p>
+
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3" th:text="#{label.name}">name</dt>
+                <dd class="col-sm-9" id="name">name</dd>
+            </dl>
+            <a class="btn btn-primary" onclick="showDialog()" th:text="#{button.edit}">Edit</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle" th:text="#{dialog.genre.edit.title}">modalTitle</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="detailsForm">
+                    <input type="hidden" id="id" name="id" th:value="${id}">
+                    <div class="form-group">
+                        <label for="editName" class="col-form-label" th:text="#{label.name}">Name</label>
+                        <input type="text" class="form-control" id="editName" name="name"
+                               placeholder="placeholder">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.cancel}">
+                    <span class="fa fa-close"></span>
+                    cancel
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveGenre()" th:text="#{button.save}">
+                    <span class="fa fa-check"></span>
+                    save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{fragments/footer :: footer}">...</div>
+</body>
+</html>
